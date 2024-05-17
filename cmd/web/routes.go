@@ -11,7 +11,7 @@ func routes() http.Handler {
 
 	mux.Get("/", handlers.Instance.Home)
 	mux.Get("/fun", handlers.Instance.Fun)
-	mux.Post("/fun/change", handlers.Instance.FunChange)
+	mux.Get("/fun/{color}", handlers.Instance.FunChange)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

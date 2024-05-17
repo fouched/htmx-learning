@@ -8,5 +8,5 @@ import (
 
 // Home is the home page handler
 func (m *HandlerConfig) Home(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "/home.gohtml", &models.TemplateData{})
+	render.Template(w, r, "/landing.gohtml", &models.TemplateData{})
 }

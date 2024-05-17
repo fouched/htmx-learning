@@ -1,0 +1,4 @@
+<div id="rocks">
+    <h2 style="color: {{ .StringMap.color }}">Go &amp; HTMX Rocks!</h2>
+    <button hx-get="/fun/{{ .StringMap.color }}" hx-target="#rocks">Change Color</button>
+</div>
