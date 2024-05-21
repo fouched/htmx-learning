@@ -1,0 +1,13 @@
+{{template "base" .}}
+{{define "content"}}
+    <h1 class="h1-blue">{{ .StringMap.topMsg }}</h1>
+    <hr />
+        <div id="stateMsg">
+            Is {{ .BoolMap.stateMsg }}
+            <hr />
+            <button class="btn btn-outline-secondary"
+                    hx-get="/state/toggle/{{ .BoolMap.stateMsg }}"
+                    hx-target="#stateMsg">Toggle isTrue</button>
+        </div>
+
+{{end}}

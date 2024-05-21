@@ -12,6 +12,8 @@ func routes() http.Handler {
 	mux.Get("/", handlers.Instance.Home)
 	mux.Get("/fun", handlers.Instance.Fun)
 	mux.Get("/fun/{color}", handlers.Instance.FunChange)
+	mux.Get("/state", handlers.Instance.State)
+	mux.Get("/state/toggle/{isTrue}", handlers.Instance.StateToggle)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
