@@ -5,6 +5,7 @@ import (
 	"github.com/fouched/htmx-learning/internal/render"
 	"github.com/go-chi/chi/v5"
 	"net/http"
+	"time"
 )
 
 func (m *HandlerConfig) State(w http.ResponseWriter, r *http.Request) {
@@ -15,9 +16,27 @@ func (m *HandlerConfig) State(w http.ResponseWriter, r *http.Request) {
 	boolMap := make(map[string]bool)
 	boolMap["stateMsg"] = true
 
+	data := make(map[string]interface{})
+	layout := "2006-01-02"
+
+	birthDate, _ := time.Parse(layout, "1997-02-03")
+	data["1"] = models.Person{
+		FirstName: "Mary",
+		LastName:  "Jones",
+		DOB:       birthDate,
+	}
+
+	birthDate, _ = time.Parse(layout, "1990-04-06")
+	data["2"] = models.Person{
+		FirstName: "Jack",
+		LastName:  "Smith",
+		DOB:       birthDate,
+	}
+
 	render.Template(w, r, "/state/landing.gohtml", &models.TemplateData{
 		StringMap: stringMap,
 		BoolMap:   boolMap,
+		Data:      data,
 	})
 }
 

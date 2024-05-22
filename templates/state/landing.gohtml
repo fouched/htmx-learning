@@ -9,5 +9,11 @@
                     hx-get="/state/toggle/{{ .BoolMap.stateMsg }}"
                     hx-target="#stateMsg">Toggle isTrue</button>
         </div>
-
+    <hr />
+    <h3>People</h3>
+    <ul class="list-group">
+        {{ range .Data}}
+            <li class="list-group-item">{{ .FirstName }} {{ .LastName }}</li>
+        {{ end }}
+    </ul>
 {{end}}
