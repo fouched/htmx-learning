@@ -1,0 +1,16 @@
+{{ define "input"}}
+    <label for="{{ .Name }}">{{ .Title }}</label>
+    <input
+            id="{{ .Name }}"
+            name="{{ .Name }}"
+            {{ with .Type }}type="{{ . }}" {{ else }} type="text" {{ end }}
+            title="{{ .Title }}"
+            {{ with .Class }}class="{{ . }}"{{ end }}
+            {{ with .AutoComplete }}autocomplete="{{ . }}"{{ end }}
+            {{ with .Value }}value="{{ . }}"{{ end }}
+            {{ with .HxTrigger }} hx-trigger="{{ . }}"{{ end }}
+            {{ with .HxPost }} hx-get="{{ . }}"{{ end }}
+            {{ with .HxTarget }} hx-target="{{ . }}"{{ end }}
+            {{ with .HxSwap }}hx-swap="{{ . }}"{{ end }}
+    />
+{{ end }}
