@@ -50,8 +50,6 @@ func (m *HandlerConfig) StateInputChange(w http.ResponseWriter, r *http.Request)
 
 func (m *HandlerConfig) StateToggle(w http.ResponseWriter, r *http.Request) {
 
-	//TODO: this stuff should really just be using the session?
-	// So much for stateless, but it does reduce network load...
 	isTrue := chi.URLParam(r, "isTrue")
 
 	boolMap := make(map[string]bool)
