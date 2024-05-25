@@ -8,6 +8,7 @@ type Input struct {
 	AutoComplete string
 	Value        string
 	HxTrigger    string
+	HxGet        string
 	HxPost       string
 	HxTarget     string
 	HxSwap       string

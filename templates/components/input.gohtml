@@ -9,7 +9,8 @@
             {{ with .AutoComplete }}autocomplete="{{ . }}"{{ end }}
             {{ with .Value }}value="{{ . }}"{{ end }}
             {{ with .HxTrigger }} hx-trigger="{{ . }}"{{ end }}
-            {{ with .HxPost }} hx-get="{{ . }}"{{ end }}
+            {{ with .HxGet }} hx-get="{{ . }}"{{ end }}
+            {{ with .HxPost }} hx-post="{{ . }}"{{ end }}
             {{ with .HxTarget }} hx-target="{{ . }}"{{ end }}
             {{ with .HxSwap }}hx-swap="{{ . }}"{{ end }}
     />
