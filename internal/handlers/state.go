@@ -45,7 +45,6 @@ func (m *HandlerConfig) StateInputChange(w http.ResponseWriter, r *http.Request)
 	render.TemplateSnippet(w, r, "/state/input.change.gohtml", &models.TemplateData{
 		StringMap: stringMap,
 	})
-
 }
 
 func (m *HandlerConfig) StateToggle(w http.ResponseWriter, r *http.Request) {
