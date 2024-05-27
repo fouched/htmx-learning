@@ -12,7 +12,8 @@ func routes() http.Handler {
 	mux.Get("/", handlers.Instance.Home)
 	mux.Get("/fun", handlers.Instance.Fun)
 	mux.Get("/fun/{color}", handlers.Instance.FunChange)
-	mux.Get("/state", handlers.Instance.State)
+	mux.Get("/state", handlers.Instance.GetStatePage)
+	mux.Post("/state/add", handlers.Instance.AddPerson)
 	mux.Get("/state/input/{id}", handlers.Instance.StateInputChange)
 	mux.Get("/state/toggle/{isTrue}", handlers.Instance.StateToggle)
 

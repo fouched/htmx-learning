@@ -1,0 +1,13 @@
+<h5>Basic Range:</h5>
+<ul class="list-group">
+    {{ range .Data}}
+        <li class="list-group-item">{{ .FirstName }} {{ .LastName }} </li>
+    {{ end }}
+</ul>
+<hr />
+<h5>Range with key & value:</h5>
+<ul class="list-group">
+    {{ range $key, $value := .Data}}
+        <li class="list-group-item">{{ $key }} {{ $value.FirstName }} {{ $value.LastName }} </li>
+    {{ end }}
+</ul>

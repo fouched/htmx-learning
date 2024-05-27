@@ -6,10 +6,13 @@ import (
 	"github.com/fouched/htmx-learning/internal/render"
 	"github.com/go-chi/chi/v5"
 	"net/http"
+	"strconv"
 	"time"
 )
 
-func (m *HandlerConfig) State(w http.ResponseWriter, r *http.Request) {
+var data = make(map[string]interface{})
+
+func (m *HandlerConfig) GetStatePage(w http.ResponseWriter, r *http.Request) {
 
 	stringMap := make(map[string]string)
 	stringMap["topMsg"] = "Hello, GO & HTMX!"
@@ -17,11 +20,13 @@ func (m *HandlerConfig) State(w http.ResponseWriter, r *http.Request) {
 	boolMap := make(map[string]bool)
 	boolMap["stateMsg"] = true
 
+	InitInitialState()
+
 	templates := []string{"/state/landing.gohtml", "/components/input.gohtml"}
 	render.MultipleTemplates(w, r, templates, &models.TemplateData{
 		StringMap:    stringMap,
 		BoolMap:      boolMap,
-		Data:         GetInitialState(),
+		Data:         data,
 		ComponentMap: GetComponents(),
 	})
 }
@@ -42,7 +47,7 @@ func (m *HandlerConfig) StateInputChange(w http.ResponseWriter, r *http.Request)
 	stringMap["value"] = value
 
 	// return a template snippet to be rendered elsewhere on the page
-	render.TemplateSnippet(w, r, "/state/input.change.gohtml", &models.TemplateData{
+	render.TemplateSnippet(w, r, "/state/input.gohtml", &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
@@ -58,32 +63,56 @@ func (m *HandlerConfig) StateToggle(w http.ResponseWriter, r *http.Request) {
 		boolMap["stateMsg"] = true
 	}
 
-	render.TemplateSnippet(w, r, "/state/toggle.state.gohtml", &models.TemplateData{
+	render.TemplateSnippet(w, r, "/state/toggle.gohtml", &models.TemplateData{
 		BoolMap: boolMap,
 	})
 }
 
-func GetInitialState() map[string]interface{} {
+func (m *HandlerConfig) AddPerson(w http.ResponseWriter, r *http.Request) {
+
+	pe := r.ParseForm()
+	if pe != nil {
+		fmt.Println("Cannot parse form", pe)
+	}
 
 	layout := "2006-01-02"
-	birthDate, _ := time.Parse(layout, "1997-02-03")
-	data := make(map[string]interface{})
-	data["1"] = models.Person{
-		ID:        1,
-		FirstName: "Mary",
-		LastName:  "Jones",
+	birthDate, _ := time.Parse(layout, r.Form.Get("dob"))
+	id := len(data) + 1
+	ids := strconv.Itoa(id)
+	data[ids] = models.Person{
+		ID:        id,
+		FirstName: r.Form.Get("firstName"),
+		LastName:  r.Form.Get("lastName"),
 		DOB:       birthDate,
 	}
 
-	birthDate, _ = time.Parse(layout, "1990-04-06")
-	data["2"] = models.Person{
-		ID:        2,
-		FirstName: "Jack",
-		LastName:  "Smith",
-		DOB:       birthDate,
-	}
+	render.TemplateSnippet(w, r, "/state/grid.gohtml", &models.TemplateData{
+		Data: data,
+	})
 
-	return data
+}
+
+func InitInitialState() {
+
+	if len(data) == 0 {
+		layout := "2006-01-02"
+
+		birthDate, _ := time.Parse(layout, "1997-02-03")
+		data[strconv.Itoa(len(data)+1)] = models.Person{
+			ID:        1,
+			FirstName: "Mary",
+			LastName:  "Jones",
+			DOB:       birthDate,
+		}
+
+		birthDate, _ = time.Parse(layout, "1990-04-06")
+		data[strconv.Itoa(len(data)+1)] = models.Person{
+			ID:        2,
+			FirstName: "Jack",
+			LastName:  "Smith",
+			DOB:       birthDate,
+		}
+	}
 }
 
 func GetComponents() map[string]interface{} {
@@ -98,7 +127,7 @@ func GetComponents() map[string]interface{} {
 		AutoComplete: "firstNameNew",
 		Value:        "",
 		HxTrigger:    "keyup delay:100ms changed",
-		HxPost:       "/state/input/firstName",
+		HxGet:        "/state/input/firstName",
 		HxTarget:     "#fn",
 		HxSwap:       "innerHTML",
 	}
@@ -110,7 +139,7 @@ func GetComponents() map[string]interface{} {
 		AutoComplete: "lastNameNew",
 		Value:        "",
 		HxTrigger:    "keyup delay:100ms changed",
-		HxPost:       "/state/input/lastName",
+		HxGet:        "/state/input/lastName",
 		HxTarget:     "#ln",
 		HxSwap:       "innerHTML",
 	}
@@ -121,7 +150,7 @@ func GetComponents() map[string]interface{} {
 		Class:        "form-control",
 		AutoComplete: "dobNew",
 		Value:        "",
-		HxPost:       "/state/input/dob",
+		HxGet:        "/state/input/dob",
 		HxTarget:     "#db",
 		HxSwap:       "innerHTML",
 	}
