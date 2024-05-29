@@ -9,22 +9,24 @@ import (
 )
 
 var pathToTemplates = "./templates"
-var pathToTemplateSnippet = "./templates/snippets"
 var app *config.AppConfig
 
 func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
-// MultipleTemplates renders parent and children templates. The parent should be defined first
-func MultipleTemplates(w http.ResponseWriter, r *http.Request, tmpl []string, td *models.TemplateData) {
+// Templates renders parent and children templates. The parent should be defined first
+func Templates(w http.ResponseWriter, r *http.Request, tmpl []string, addBaseTemplate bool, td *models.TemplateData) {
 
 	td = AddDefaultData(td, r)
 
 	for i, t := range tmpl {
 		tmpl[i] = pathToTemplates + t
 	}
-	tmpl = append(tmpl, pathToTemplates+"/base.layout.gohtml")
+
+	if addBaseTemplate {
+		tmpl = append(tmpl, pathToTemplates+"/base.layout.gohtml")
+	}
 
 	parsedTemplate, _ := template.ParseFiles(tmpl...)
 	err := parsedTemplate.Execute(w, td)
@@ -33,29 +35,6 @@ func MultipleTemplates(w http.ResponseWriter, r *http.Request, tmpl []string, td
 		return
 	}
 
-}
-
-func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
-
-	td = AddDefaultData(td, r)
-
-	parsedTemplate, _ := template.ParseFiles(pathToTemplates+tmpl, pathToTemplates+"/base.layout.gohtml")
-	err := parsedTemplate.Execute(w, td)
-	if err != nil {
-		fmt.Println("Error parsing template", err)
-		return
-	}
-
-}
-
-func TemplateSnippet(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
-
-	parsedTemplate, _ := template.ParseFiles(pathToTemplateSnippet + tmpl)
-	err := parsedTemplate.Execute(w, td)
-	if err != nil {
-		fmt.Println("Error parsing template", err)
-		return
-	}
 }
 
 func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {

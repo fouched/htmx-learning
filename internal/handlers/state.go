@@ -23,7 +23,7 @@ func (m *HandlerConfig) GetStatePage(w http.ResponseWriter, r *http.Request) {
 	InitInitialState()
 
 	templates := []string{"/state/landing.gohtml", "/components/input.gohtml"}
-	render.MultipleTemplates(w, r, templates, &models.TemplateData{
+	render.Templates(w, r, templates, true, &models.TemplateData{
 		StringMap:    stringMap,
 		BoolMap:      boolMap,
 		Data:         data,
@@ -46,8 +46,8 @@ func (m *HandlerConfig) StateInputChange(w http.ResponseWriter, r *http.Request)
 	stringMap := make(map[string]string)
 	stringMap["value"] = value
 
-	// return a template snippet to be rendered elsewhere on the page
-	render.TemplateSnippet(w, r, "/state/input.gohtml", &models.TemplateData{
+	templates := []string{"/snippets/state/input.gohtml"}
+	render.Templates(w, r, templates, false, &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
@@ -63,7 +63,8 @@ func (m *HandlerConfig) StateToggle(w http.ResponseWriter, r *http.Request) {
 		boolMap["stateMsg"] = true
 	}
 
-	render.TemplateSnippet(w, r, "/state/toggle.gohtml", &models.TemplateData{
+	templates := []string{"/snippets/state/toggle.gohtml"}
+	render.Templates(w, r, templates, false, &models.TemplateData{
 		BoolMap: boolMap,
 	})
 }
@@ -86,8 +87,10 @@ func (m *HandlerConfig) AddPerson(w http.ResponseWriter, r *http.Request) {
 		DOB:       birthDate,
 	}
 
-	render.TemplateSnippet(w, r, "/state/grid.gohtml", &models.TemplateData{
-		Data: data,
+	templates := []string{"/snippets/state/grid.gohtml", "/components/input.gohtml"}
+	render.Templates(w, r, templates, false, &models.TemplateData{
+		Data:         data,
+		ComponentMap: GetComponents(),
 	})
 
 }

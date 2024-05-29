@@ -12,7 +12,8 @@ func (m *HandlerConfig) Fun(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["color"] = color
 
-	render.Template(w, r, "/fun/landing.gohtml", &models.TemplateData{
+	templates := []string{"/fun/landing.gohtml"}
+	render.Templates(w, r, templates, true, &models.TemplateData{
 		StringMap: stringMap,
 	})
 
@@ -32,7 +33,8 @@ func (m *HandlerConfig) FunChange(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["color"] = color
 
-	render.TemplateSnippet(w, r, "/fun/change.gohtml", &models.TemplateData{
+	templates := []string{"/snippets/fun/change.gohtml"}
+	render.Templates(w, r, templates, false, &models.TemplateData{
 		StringMap: stringMap,
 	})
 }

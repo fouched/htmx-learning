@@ -1,3 +1,15 @@
+<form hx-post="/state/add" hx-target="#datagrid" hx-swap="innerHTML" autoComplete="off">
+        {{block "input" .ComponentMap.firstName }} {{end}}
+        {{block "input" .ComponentMap.lastName }} {{end}}
+        {{block "input" .ComponentMap.dob }} {{end}}
+        <input type="submit" value="Submit" class="btn btn-primary" />
+</form>
+<div>
+        First Name: <span id="fn"></span><br/>
+        Last Name: <span id="ln"></span><br/>
+        Dob: <span id="db"></span><br/>
+</div>
+<hr />
 <h5>Basic Range:</h5>
 <ul class="list-group">
     {{ range .Data}}
