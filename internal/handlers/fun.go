@@ -12,7 +12,7 @@ func (m *HandlerConfig) Fun(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["color"] = color
 
-	templates := []string{"/fun/landing.gohtml"}
+	templates := []string{"/pages/fun/landing.gohtml"}
 	render.Templates(w, r, templates, true, &models.TemplateData{
 		StringMap: stringMap,
 	})

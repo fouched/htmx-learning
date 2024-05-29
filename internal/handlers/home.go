@@ -13,7 +13,7 @@ func (m *HandlerConfig) Home(w http.ResponseWriter, r *http.Request) {
 	stringMap["topMsg"] = "Hello, prop"
 	stringMap["bottomMsg"] = "Hello, prop again"
 
-	templates := []string{"/home.gohtml", "/components/helloworld.top.gohtml", "/components/helloworld.bottom.gohtml"}
+	templates := []string{"/pages/home.gohtml", "/components/helloworld.top.gohtml", "/components/helloworld.bottom.gohtml"}
 	render.Templates(w, r, templates, true, &models.TemplateData{
 		StringMap: stringMap,
 	})

@@ -22,7 +22,7 @@ func (m *HandlerConfig) GetStatePage(w http.ResponseWriter, r *http.Request) {
 
 	InitInitialState()
 
-	templates := []string{"/state/landing.gohtml", "/components/input.gohtml"}
+	templates := []string{"/pages/state/landing.gohtml", "/components/input.gohtml"}
 	render.Templates(w, r, templates, true, &models.TemplateData{
 		StringMap:    stringMap,
 		BoolMap:      boolMap,

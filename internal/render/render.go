@@ -15,7 +15,7 @@ func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
-// Templates renders parent and children templates. The parent should be defined first
+// Templates can render multiple templates. "Parent" templates should be defined first
 func Templates(w http.ResponseWriter, r *http.Request, tmpl []string, addBaseTemplate bool, td *models.TemplateData) {
 
 	td = AddDefaultData(td, r)
