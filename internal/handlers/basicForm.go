@@ -21,10 +21,10 @@ func (m *HandlerConfig) BasicFormPost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	firstName := r.Form.Get("firstName")
-	println("firstName:" + firstName)
-	println("lastName:" + r.Form.Get("lastName"))
-	println("email:" + r.Form.Get("email"))
-	println("password:" + r.Form.Get("password"))
+	fmt.Printf("firstName:%s\n", firstName)
+	fmt.Printf("lastName:%s\n", r.Form.Get("lastName"))
+	fmt.Printf("email:%s\n", r.Form.Get("email"))
+	fmt.Printf("password:%s\n", r.Form.Get("password"))
 
 	boolMap := make(map[string]bool)
 	if firstName == "Fouche" {
