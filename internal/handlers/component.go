@@ -12,7 +12,7 @@ import (
 
 var data = make(map[string]interface{})
 
-func (m *HandlerConfig) GetStatePage(w http.ResponseWriter, r *http.Request) {
+func (m *HandlerConfig) GetComponentPage(w http.ResponseWriter, r *http.Request) {
 
 	stringMap := make(map[string]string)
 	stringMap["topMsg"] = "Hello, GO & HTMX!"
@@ -22,7 +22,7 @@ func (m *HandlerConfig) GetStatePage(w http.ResponseWriter, r *http.Request) {
 
 	InitInitialState()
 
-	templates := []string{"/pages/state/landing.gohtml", "/components/input.gohtml"}
+	templates := []string{"/pages/component/landing.gohtml", "/components/input.gohtml"}
 	render.Templates(w, r, templates, true, &models.TemplateData{
 		StringMap:    stringMap,
 		BoolMap:      boolMap,
@@ -31,7 +31,7 @@ func (m *HandlerConfig) GetStatePage(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (m *HandlerConfig) StateInputChange(w http.ResponseWriter, r *http.Request) {
+func (m *HandlerConfig) ComponentInputChange(w http.ResponseWriter, r *http.Request) {
 
 	// which field are we working with
 	id := chi.URLParam(r, "id")
@@ -46,13 +46,13 @@ func (m *HandlerConfig) StateInputChange(w http.ResponseWriter, r *http.Request)
 	stringMap := make(map[string]string)
 	stringMap["value"] = value
 
-	templates := []string{"/snippets/state/input.gohtml"}
+	templates := []string{"/snippets/component/input.gohtml"}
 	render.Templates(w, r, templates, false, &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
 
-func (m *HandlerConfig) StateToggle(w http.ResponseWriter, r *http.Request) {
+func (m *HandlerConfig) ComponentToggle(w http.ResponseWriter, r *http.Request) {
 
 	isTrue := chi.URLParam(r, "isTrue")
 
@@ -63,7 +63,7 @@ func (m *HandlerConfig) StateToggle(w http.ResponseWriter, r *http.Request) {
 		boolMap["stateMsg"] = true
 	}
 
-	templates := []string{"/snippets/state/toggle.gohtml"}
+	templates := []string{"/snippets/component/toggle.gohtml"}
 	render.Templates(w, r, templates, false, &models.TemplateData{
 		BoolMap: boolMap,
 	})
@@ -87,7 +87,7 @@ func (m *HandlerConfig) AddPerson(w http.ResponseWriter, r *http.Request) {
 		DOB:       birthDate,
 	}
 
-	templates := []string{"/snippets/state/grid.gohtml", "/components/input.gohtml"}
+	templates := []string{"/snippets/component/grid.gohtml", "/components/input.gohtml"}
 	render.Templates(w, r, templates, false, &models.TemplateData{
 		Data:         data,
 		ComponentMap: GetComponents(),
@@ -130,7 +130,7 @@ func GetComponents() map[string]interface{} {
 		AutoComplete: "firstNameNew",
 		Value:        "",
 		HxTrigger:    "keyup delay:100ms changed",
-		HxGet:        "/state/input/firstName",
+		HxGet:        "/component/input/firstName",
 		HxTarget:     "#fn",
 		HxSwap:       "innerHTML",
 	}
@@ -142,7 +142,7 @@ func GetComponents() map[string]interface{} {
 		AutoComplete: "lastNameNew",
 		Value:        "",
 		HxTrigger:    "keyup delay:100ms changed",
-		HxGet:        "/state/input/lastName",
+		HxGet:        "/component/input/lastName",
 		HxTarget:     "#ln",
 		HxSwap:       "innerHTML",
 	}
@@ -153,7 +153,7 @@ func GetComponents() map[string]interface{} {
 		Class:        "form-control",
 		AutoComplete: "dobNew",
 		Value:        "",
-		HxGet:        "/state/input/dob",
+		HxGet:        "/component/input/dob",
 		HxTarget:     "#db",
 		HxSwap:       "innerHTML",
 	}
