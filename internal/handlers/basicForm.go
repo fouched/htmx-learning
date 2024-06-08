@@ -27,11 +27,7 @@ func (m *HandlerConfig) BasicFormPost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("password:%s\n", r.Form.Get("password"))
 
 	boolMap := make(map[string]bool)
-	if firstName == "Fouche" {
-		boolMap["success"] = true
-	} else {
-		boolMap["success"] = false
-	}
+	boolMap["success"] = firstName == "Fouche"
 
 	templates := []string{"/pages/basicForm/landing.gohtml"}
 	render.Templates(w, r, templates, true, &models.TemplateData{
